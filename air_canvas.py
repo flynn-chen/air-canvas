@@ -108,6 +108,9 @@ while True:
       
     # Reading the frame from the camera 
     ret, frame = cap.read()
+    if ret == False:
+        print("could not access default camera 0")
+        exit(1)
       
     # Flipping the frame to see same side of yours 
     frame = cv2.flip(frame, 1) 
