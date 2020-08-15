@@ -121,9 +121,6 @@ while True:
     u_hue = cv2.getTrackbarPos("Upper Hue", 
                                "Color detectors") 
     u_saturation = cv2.getTrackbarPos("Upper Saturation", 
-    u_hue = cv2.getTrackbarPos("Upper Hue", 
-                               "Color detectors") 
-    u_saturation = cv2.getTrackbarPos("Upper Saturation", 
                                       "Color detectors") 
     u_value = cv2.getTrackbarPos("Upper Value", 
                                  "Color detectors") 
