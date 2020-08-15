@@ -7,6 +7,8 @@ Want to create a fun and interactive learning environment?
 Try out the Air Canvas!!!
 You can use any object with a colored tip (e.g. defaulting using a blue expo marker) as a stylus. 
 
+![demo](demo.gif)
+
 ## Getting Started
 
 ### Installing
