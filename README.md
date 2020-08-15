@@ -11,7 +11,7 @@ You can use any object with a colored tip (e.g. defaulting using a blue expo mar
 
 ### Installing
 
-Download this repository on the upper right corner
+Download this repository by clicking the green button on the upper right corner
 
 or
 
