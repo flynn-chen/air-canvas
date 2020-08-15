@@ -275,7 +275,7 @@ while True:
     # Keyboard OP
     k = cv2.waitKey(10)
     if k == 27 or k == ord('q'):  # press ESC to exit
-        camera.release()
+        cap.release()
         cv2.destroyAllWindows()
         break
     elif k == ord('b') or iteration % 1000 == 2:  # press 'b' to capture the background
