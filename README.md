@@ -15,21 +15,29 @@ You can use any object with a colored tip (e.g. defaulting using a blue expo mar
 
 Download this repository by clicking the green button on the upper right corner
 
-or
+or for advanced users:  
 
 ```
 git clone git@github.com:flynn-chen/air-canvas.git
+conda -n air_canvas create -f environment.yml
+conda activate air_canvas
 ```
 
+
 ### Running
+
+For macOS users,
+a terminal will pop up and ask for your password for sudo, 
+because keyboard tracking requires multi-threading.
 
 double click
 ```
 run.command
 ```
-For macOS users,
-a terminal will pop up and ask for your password for sudo, 
-because keyboard tracking requires multi-threading.
+or for advanced users:  
+```
+python air_canvas.py
+```
 
 ### Usage
 
@@ -45,7 +53,7 @@ and press <kbd>Space</kbd> to clear or change colors. <br />
 
 ## Built With
 
-* [pyinstall](https://www.pyinstaller.org/) - Build cross-platform executables
+* [pyinstaller](https://www.pyinstaller.org/) - Build cross-platform executables
 * [OpenCV](https://pypi.org/project/opencv-python/) - Accessing video-camera and tracking
 * [Numpy](https://numpy.org/) - Numerical operations and signal processing
 * [Keyboard](https://pypi.org/project/keyboard/) - Keyboard tracking
