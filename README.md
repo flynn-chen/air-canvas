@@ -19,7 +19,7 @@ or
 git clone git@github.com:flynn-chen/air-canvas.git
 ```
 
-### Installing
+### Running
 
 double click
 ```
