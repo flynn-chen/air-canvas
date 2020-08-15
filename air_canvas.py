@@ -109,7 +109,7 @@ while True:
     # Reading the frame from the camera 
     ret, frame = cap.read()
     if ret == False:
-        print("could not access default camera 0")
+        print("failed to utilize default camera 0")
         exit(1)
       
     # Flipping the frame to see same side of yours 
@@ -118,6 +118,9 @@ while True:
    
     # Getting the updated positions of the trackbar 
     # and setting the HSV values 
+    u_hue = cv2.getTrackbarPos("Upper Hue", 
+                               "Color detectors") 
+    u_saturation = cv2.getTrackbarPos("Upper Saturation", 
     u_hue = cv2.getTrackbarPos("Upper Hue", 
                                "Color detectors") 
     u_saturation = cv2.getTrackbarPos("Upper Saturation", 
@@ -313,6 +316,3 @@ while True:
 
     iteration += 1
   
-# Release the camera and all resources 
-cap.release() 
-cv2.destroyAllWindows() 
