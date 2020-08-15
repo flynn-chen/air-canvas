@@ -1,6 +1,7 @@
 import numpy as np
 import keyboard 
 import cv2 
+import time
 from collections import deque 
   
    
@@ -60,9 +61,9 @@ colors = [(255, 0, 0), (0, 255, 0),
 colorIndex = 0
    
 # Here is code for Canvas setup 
-paintWindow = np.zeros((471, 636, 3)) + 255
+# paintWindow = np.zeros((471, 636, 3)) + 255
    
-cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE) 
+# cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE) 
    
   
 # Loading the default webcam of PC. 
@@ -79,6 +80,21 @@ def removeBG(frame):
     fgmask = cv2.erode(fgmask, kernel, iterations=1)
     res = cv2.bitwise_and(frame, frame, mask=fgmask)
     return res
+
+def drawPoints(points, colors, frame):
+    for i in range(len(points)): 
+          
+        for j in range(len(points[i])): 
+              
+            for k in range(1, len(points[i][j])): 
+                  
+                if points[i][j][k - 1] is None or points[i][j][k] is None: 
+                    continue
+                      
+                cv2.line(frame, points[i][j][k - 1], points[i][j][k], colors[i], 2) 
+                #cv2.line(paintWindow, points[i][j][k - 1], points[i][j][k], colors[i], 2) 
+
+iteration = 0
    
 # Keep looping 
 while True: 
@@ -192,7 +208,7 @@ while True:
                 red_index = 0
                 yellow_index = 0
    
-                paintWindow[67:, :, :] = 255
+                #paintWindow[67:, :, :] = 255
             elif 160 <= center[0] <= 255: 
                     colorIndex = 0 # Blue 
             elif 275 <= center[0] <= 370: 
@@ -226,38 +242,33 @@ while True:
    
     # Draw lines of all the colors on the 
     # canvas and frame  
-    points = [bpoints, gpoints, rpoints, ypoints] 
-    for i in range(len(points)): 
-          
-        for j in range(len(points[i])): 
-              
-            for k in range(1, len(points[i][j])): 
-                  
-                if points[i][j][k - 1] is None or points[i][j][k] is None: 
-                    continue
-                      
-                cv2.line(frame, points[i][j][k - 1], points[i][j][k], colors[i], 2) 
-                cv2.line(paintWindow, points[i][j][k - 1], points[i][j][k], colors[i], 2) 
+    points = [bpoints, gpoints, rpoints, ypoints]
+    drawPoints(points, colors, frame)
 
     # Show all the windows 
-    cv2.imshow("Tracking", frame) 
+    cv2.imshow("Tracking", frame)
     #cv2.imshow("Paint", paintWindow) 
     #cv2.imshow("mask", Mask) 
    
     # Keyboard OP
     k = cv2.waitKey(10)
-    if k == 27:  # press ESC to exit
+    if k == 27 or k == ord('q'):  # press ESC to exit
         camera.release()
         cv2.destroyAllWindows()
         break
-    elif k == ord('b'):  # press 'b' to capture the background
+    elif k == ord('r') or iteration % 1000 == 10:  # press 'b' to capture the background
         bgModel = cv2.createBackgroundSubtractorMOG2(0, bgSubThreshold)
         isBgCaptured = True
-        print( 'Background Captured')
-    elif k == ord('r'):  # press 'r' to reset the background
-        bgModel = None
-        isBgCaptured = False
-        print ('Reset BackGround')
+        print('Background Captured')
+    elif k == ord('s'):  # press 's' to save the screen
+        board = np.zeros([frame.shape[0], frame.shape[1]], np.uint8)  # initialize white board
+        drawPoints(points, colors, board)
+        cv2.imshow("board", board)
+        filename = time.strftime("%Y-%m-%d-%H-%M-%S") + ".jpg"
+        cv2.imwrite(filename, board)
+        print('Screen Shot Taken ' + filename)
+
+    iteration += 1
   
 # Release the camera and all resources 
 cap.release() 
