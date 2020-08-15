@@ -31,6 +31,17 @@ For macOS users,
 a terminal will pop up and ask for your password for sudo, 
 because keyboard tracking requires multi-threading.
 
+### Usage
+
+Press <kbd>Space</kbd> to track colored tip and start writing
+Press <kbd>z</kbd> to unwrite
+Press <kbd>b</kbd> to collect a background if you or the background changed
+Press <kbd>s</kbd> to save the current screen of writing without video
+Press <kbd>q</kbd> or <kbd>esc</kbd> to quit
+
+Place colored tip onto the squares on the top of the screen and press <kbd>Space</kbd> to clear or change colors.
+
+
 ## Built With
 
 * [pyinstall](https://www.pyinstaller.org/) - Build cross-platform executables
