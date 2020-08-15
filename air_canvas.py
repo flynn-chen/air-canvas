@@ -43,6 +43,11 @@ bpoints = [deque(maxlen = 1024)]
 gpoints = [deque(maxlen = 1024)] 
 rpoints = [deque(maxlen = 1024)] 
 ypoints = [deque(maxlen = 1024)] 
+
+last_blue_index = set()
+last_green_index = set()
+last_red_index = set()
+last_yellow_index = set()
    
 # These indexes will be used to mark position 
 # of pointers in colour array 
@@ -219,6 +224,11 @@ while True:
                     colorIndex = 3 # Yellow 
         else : 
 
+
+            last_blue_index.add(blue_index)
+            last_green_index.add(green_index)
+            last_red_index.add(red_index)
+            last_yellow_index.add(yellow_index)
             if colorIndex == 0: 
                 bpoints[blue_index].appendleft(center) 
             elif colorIndex == 1: 
@@ -256,7 +266,7 @@ while True:
         camera.release()
         cv2.destroyAllWindows()
         break
-    elif k == ord('r') or iteration % 1000 == 10:  # press 'b' to capture the background
+    elif k == ord('b') or iteration % 1000 == 2:  # press 'b' to capture the background
         bgModel = cv2.createBackgroundSubtractorMOG2(0, bgSubThreshold)
         isBgCaptured = True
         print('Background Captured')
@@ -267,6 +277,29 @@ while True:
         filename = time.strftime("%Y-%m-%d-%H-%M-%S") + ".jpg"
         cv2.imwrite(filename, board)
         print('Screen Shot Taken ' + filename)
+    elif k == ord('z'):  # press 's' to save the screen
+        try:
+            if colorIndex == 0: 
+                print(last_blue_index)
+                print(bpoints)
+                bpoints.pop(max(last_blue_index))
+                last_blue_index.remove(max(last_blue_index))
+                blue_index -= 1
+            elif colorIndex == 1: 
+                gpoints.pop(max(last_green_index))
+                last_green_index.remove(max(last_green_index))
+                green_index -= 1
+            elif colorIndex == 2: 
+                rpoints.pop(max(last_red_index))
+                last_red_index.remove(max(last_red_index))
+                red_index -= 1
+            elif colorIndex == 3: 
+                ypoints.pop(max(last_yellow_index)) 
+                last_yellow_index.remove(max(last_yellow_index))
+                yellow_index -= 1
+        except:
+            pass
+        print('Return One Stroke')
 
     iteration += 1
   
