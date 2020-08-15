@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import numpy as np
 import keyboard 
 import cv2 
@@ -73,8 +75,8 @@ colorIndex = 0
   
 # Loading the default webcam of PC. 
 cap = cv2.VideoCapture(0) 
-cap.set(3, 320)
-cap.set(4, 240)
+cap.set(3, 640)
+cap.set(4, 480)
 
 def removeBG(frame):
     fgmask = bgModel.apply(frame,learningRate=learningRate)
@@ -131,35 +133,35 @@ while True:
    
     # Adding the colour buttons to the live frame  
     # for colour access 
-    frame = cv2.rectangle(frame, (40, 1), (140, 65),  
+    frame = cv2.rectangle(frame, (40, 1), (140, 25),  
                           (122, 122, 122), -1) 
-    frame = cv2.rectangle(frame, (160, 1), (255, 65), 
+    frame = cv2.rectangle(frame, (160, 1), (255, 25), 
                           colors[0], -1) 
-    frame = cv2.rectangle(frame, (275, 1), (370, 65),  
+    frame = cv2.rectangle(frame, (275, 1), (370, 25),  
                           colors[1], -1) 
-    frame = cv2.rectangle(frame, (390, 1), (485, 65),  
+    frame = cv2.rectangle(frame, (390, 1), (485, 25),  
                           colors[2], -1) 
-    frame = cv2.rectangle(frame, (505, 1), (600, 65), 
+    frame = cv2.rectangle(frame, (505, 1), (600, 25), 
                           colors[3], -1) 
       
-    cv2.putText(frame, "CLEAR ALL", (49, 33), 
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5, 
+    cv2.putText(frame, "CLEAR", (45, 15), 
+                cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.8, 
                 (255, 255, 255), 2, cv2.LINE_AA) 
       
-    cv2.putText(frame, "BLUE", (185, 33),  
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5, 
+    cv2.putText(frame, "BLUE", (165, 15), 
+                cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.8, 
                 (255, 255, 255), 2, cv2.LINE_AA) 
       
-    cv2.putText(frame, "GREEN", (298, 33), 
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5, 
+    cv2.putText(frame, "GREEN", (280, 15), 
+                cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.8, 
                 (255, 255, 255), 2, cv2.LINE_AA) 
       
-    cv2.putText(frame, "RED", (420, 33), 
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5,  
+    cv2.putText(frame, "RED", (395, 15), 
+                cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.8,  
                 (255, 255, 255), 2, cv2.LINE_AA) 
       
-    cv2.putText(frame, "YELLOW", (520, 33), 
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5,  
+    cv2.putText(frame, "YELLOW", (510, 15), 
+                cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.8,  
                 (150, 150, 150), 2, cv2.LINE_AA) 
    
    
@@ -241,14 +243,21 @@ while True:
     # Append the next deques when nothing is  
     # detected to avois messing up 
     else: 
-        bpoints.append(deque(maxlen = 512)) 
-        blue_index += 1
-        gpoints.append(deque(maxlen = 512)) 
-        green_index += 1
-        rpoints.append(deque(maxlen = 512)) 
-        red_index += 1
-        ypoints.append(deque(maxlen = 512)) 
-        yellow_index += 1
+        if bpoints[-1] != deque(maxlen = 512):
+            bpoints.append(deque(maxlen = 512)) 
+            blue_index += 1
+
+        if gpoints[-1] != deque(maxlen = 512):
+            gpoints.append(deque(maxlen = 512)) 
+            green_index += 1
+
+        if rpoints[-1] != deque(maxlen = 512):
+            rpoints.append(deque(maxlen = 512)) 
+            red_index += 1
+
+        if gpoints[-1] != deque(maxlen = 512):
+            gpoints.append(deque(maxlen = 512)) 
+            yellow_index += 1
    
     # Draw lines of all the colors on the 
     # canvas and frame  
@@ -280,8 +289,6 @@ while True:
     elif k == ord('z'):  # press 's' to save the screen
         try:
             if colorIndex == 0: 
-                print(last_blue_index)
-                print(bpoints)
                 bpoints.pop(max(last_blue_index))
                 last_blue_index.remove(max(last_blue_index))
                 blue_index -= 1
