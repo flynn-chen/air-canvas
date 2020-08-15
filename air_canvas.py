@@ -8,7 +8,11 @@ from collections import deque
 def setValues(x): 
    print("") 
    
-  
+# background captured parameters
+isBgCaptured = False
+bgSubThreshold = 50
+learningRate = 0.01
+
 # Creating the trackbars needed for  
 # adjusting the marker colour These  
 # trackbars will be used for setting  
@@ -65,6 +69,16 @@ cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
 cap = cv2.VideoCapture(0) 
 cap.set(3, 320)
 cap.set(4, 240)
+
+def removeBG(frame):
+    fgmask = bgModel.apply(frame,learningRate=learningRate)
+    # kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+    # res = cv2.morphologyEx(fgmask, cv2.MORPH_OPEN, kernel)
+
+    kernel = np.ones((3, 3), np.uint8)
+    fgmask = cv2.erode(fgmask, kernel, iterations=1)
+    res = cv2.bitwise_and(frame, frame, mask=fgmask)
+    return res
    
 # Keep looping 
 while True: 
@@ -74,7 +88,7 @@ while True:
       
     # Flipping the frame to see same side of yours 
     frame = cv2.flip(frame, 1) 
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) 
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
    
     # Getting the updated positions of the trackbar 
     # and setting the HSV values 
@@ -91,7 +105,7 @@ while True:
     l_value = cv2.getTrackbarPos("Lower Value", 
                                  "Color detectors") 
     Upper_hsv = np.array([u_hue, u_saturation, u_value]) 
-    Lower_hsv = np.array([l_hue, l_saturation, l_value]) 
+    Lower_hsv = np.array([l_hue, l_saturation, l_value])
    
    
     # Adding the colour buttons to the live frame  
@@ -130,7 +144,11 @@ while True:
    
     # Identifying the pointer by making its  
     # mask 
-    Mask = cv2.inRange(hsv, Lower_hsv, Upper_hsv) 
+    if isBgCaptured == True:
+        foreground = removeBG(hsv).copy()
+        Mask = cv2.inRange(foreground, Lower_hsv, Upper_hsv)
+    else:
+        Mask = cv2.inRange(hsv, Lower_hsv, Upper_hsv)
     Mask = cv2.erode(Mask, kernel, iterations = 1) 
     Mask = cv2.morphologyEx(Mask, cv2.MORPH_OPEN, kernel) 
     Mask = cv2.dilate(Mask, kernel, iterations = 1) 
@@ -226,9 +244,20 @@ while True:
     #cv2.imshow("Paint", paintWindow) 
     #cv2.imshow("mask", Mask) 
    
-    # If the 'q' key is pressed then stop the application  
-    if cv2.waitKey(1) & 0xFF == ord("q"): 
+    # Keyboard OP
+    k = cv2.waitKey(10)
+    if k == 27:  # press ESC to exit
+        camera.release()
+        cv2.destroyAllWindows()
         break
+    elif k == ord('b'):  # press 'b' to capture the background
+        bgModel = cv2.createBackgroundSubtractorMOG2(0, bgSubThreshold)
+        isBgCaptured = True
+        print( 'Background Captured')
+    elif k == ord('r'):  # press 'r' to reset the background
+        bgModel = None
+        isBgCaptured = False
+        print ('Reset BackGround')
   
 # Release the camera and all resources 
 cap.release() 
