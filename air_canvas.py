@@ -29,11 +29,11 @@ cv2.createTrackbar("Upper Saturation", "Color detectors",
 cv2.createTrackbar("Upper Value", "Color detectors",  
                    255, 255, setValues) 
 cv2.createTrackbar("Lower Hue", "Color detectors", 
-                   64, 180, setValues) 
+                   45, 180, setValues) 
 cv2.createTrackbar("Lower Saturation", "Color detectors",  
-                   72, 255, setValues) 
+                   45, 255, setValues) 
 cv2.createTrackbar("Lower Value", "Color detectors",  
-                   49, 255, setValues) 
+                   45, 255, setValues) 
   
   
 # Giving different arrays to handle colour 
@@ -204,7 +204,7 @@ while True:
    
         # Now checking if the user wants to click on  
         # any button above the screen
-        if center[1] <= 65: 
+        if center[1] <= 25: 
               
             # Clear Button 
             if 40 <= center[0] <= 140:  
