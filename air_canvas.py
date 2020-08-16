@@ -14,7 +14,7 @@ def setValues(x):
 # background captured parameters
 isBgCaptured = False
 bgSubThreshold = 50
-learningRate = 0.01
+learningRate = 0.005
 
 # Creating the trackbars needed for  
 # adjusting the marker colour These  
