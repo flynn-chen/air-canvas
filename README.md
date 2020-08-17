@@ -50,10 +50,12 @@ Press <kbd>z</kbd> to unwrite <br />
 Press <kbd>c</kbd> to unwrite <br />
 Press <kbd>b</kbd> to collect a background if you or the background changed <br />
 Press <kbd>s</kbd> to save the current screen of writing without video <br />
+
 Press <kbd>1</kbd> to change to Blue <br />
 Press <kbd>2</kbd> to change to Green <br />
 Press <kbd>3</kbd> to change to Red <br />
 Press <kbd>4</kbd> to change to Yellow <br />
+
 Press <kbd>q</kbd> or <kbd>esc</kbd> to quit <br />
 
 
