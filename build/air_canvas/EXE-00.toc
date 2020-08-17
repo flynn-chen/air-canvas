@@ -45,7 +45,7 @@
  [],
  False,
  False,
- 1597549963,
+ 1597689071,
  [('run',
    '/Users/flynn_chen/miniconda3/envs/air_canvas/lib/python3.6/site-packages/PyInstaller/bootloader/Darwin-64bit/run',
    'EXECUTABLE')])
