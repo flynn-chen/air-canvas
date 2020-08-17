@@ -36,7 +36,7 @@ run.command
 ```
 or for advanced users:  
 ```
-python air_canvas.py
+sudo python air_canvas.py
 ```
 
 ### Usage

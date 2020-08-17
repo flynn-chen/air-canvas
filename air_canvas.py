@@ -23,11 +23,11 @@ learningRate = 0.005
 # HSV required for particular colour 
 cv2.namedWindow("Color detectors")
 cv2.createTrackbar("Upper Hue", "Color detectors", 
-                   153, 180, setValues) 
+                   144, 180, setValues) 
 cv2.createTrackbar("Upper Saturation", "Color detectors", 
                    255, 255, setValues) 
 cv2.createTrackbar("Upper Value", "Color detectors",  
-                   255, 255, setValues) 
+                   224, 255, setValues) 
 cv2.createTrackbar("Lower Hue", "Color detectors", 
                    45, 180, setValues) 
 cv2.createTrackbar("Lower Saturation", "Color detectors",  
@@ -88,7 +88,7 @@ def removeBG(frame):
     res = cv2.bitwise_and(frame, frame, mask=fgmask)
     return res
 
-def drawPoints(points, colors, frame):
+def drawPoints(points, colors, this_frame):
     for i in range(len(points)): 
           
         for j in range(len(points[i])): 
@@ -97,8 +97,21 @@ def drawPoints(points, colors, frame):
                   
                 if points[i][j][k - 1] is None or points[i][j][k] is None: 
                     continue
-                      
-                cv2.line(frame, points[i][j][k - 1], points[i][j][k], colors[i], 2) 
+
+                cv2.line(this_frame, points[i][j][k - 1], points[i][j][k], colors[i], 2) 
+                #cv2.line(paintWindow, points[i][j][k - 1], points[i][j][k], colors[i], 2) 
+
+def drawBoardPoints(points, this_frame):
+    for i in range(len(points)): 
+          
+        for j in range(len(points[i])): 
+              
+            for k in range(1, len(points[i][j])): 
+                  
+                if points[i][j][k - 1] is None or points[i][j][k] is None: 
+                    continue
+                
+                cv2.line(this_frame, points[i][j][k - 1], points[i][j][k], (255, 255, 255), 2) 
                 #cv2.line(paintWindow, points[i][j][k - 1], points[i][j][k], colors[i], 2) 
 
 iteration = 0
@@ -207,7 +220,7 @@ while True:
         if center[1] <= 25: 
               
             # Clear Button 
-            if 40 <= center[0] <= 140:  
+            if (40 <= center[0] <= 140):  
                 bpoints = [deque(maxlen = 512)] 
                 gpoints = [deque(maxlen = 512)] 
                 rpoints = [deque(maxlen = 512)] 
@@ -258,8 +271,8 @@ while True:
             rpoints.append(deque(maxlen = 512)) 
             red_index += 1
 
-        if gpoints[-1] != deque(maxlen = 512):
-            gpoints.append(deque(maxlen = 512)) 
+        if ypoints[-1] != deque(maxlen = 512):
+            ypoints.append(deque(maxlen = 512)) 
             yellow_index += 1
    
     # Draw lines of all the colors on the 
@@ -278,13 +291,31 @@ while True:
         cap.release()
         cv2.destroyAllWindows()
         break
+    elif k == ord('1'): 
+        colorIndex = 0 # Blue 
+    elif k == ord('2'): 
+        colorIndex = 1 # Green 
+    elif k == ord('3'): 
+        colorIndex = 2 # Red 
+    elif k == ord('4'): 
+        colorIndex = 3 # Yellow 
+    elif k == ord('c'):  # press c to clear
+        bpoints = [deque(maxlen = 512)] 
+        gpoints = [deque(maxlen = 512)] 
+        rpoints = [deque(maxlen = 512)] 
+        ypoints = [deque(maxlen = 512)] 
+
+        blue_index = 0
+        green_index = 0
+        red_index = 0
+        yellow_index = 0
     elif k == ord('b') or iteration % 1000 == 2:  # press 'b' to capture the background
         bgModel = cv2.createBackgroundSubtractorMOG2(0, bgSubThreshold)
         isBgCaptured = True
         print('Background Captured')
     elif k == ord('s'):  # press 's' to save the screen
         board = np.zeros([frame.shape[0], frame.shape[1]], np.uint8)  # initialize white board
-        drawPoints(points, colors, board)
+        drawBoardPoints(points, board)
         cv2.imshow("board", board)
         filename = time.strftime("%Y-%m-%d-%H-%M-%S") + ".jpg"
         cv2.imwrite(filename, board)
