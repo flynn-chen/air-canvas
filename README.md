@@ -5,7 +5,7 @@ Finding new ways to communicate effectively through digital media? <br />
 Want to create a fun and interactive learning environment? <br />
 
 Try out the Air Canvas!!! <br />
-You can use any object with a colored tip (e.g. defaulting using a blue expo marker) as a stylus. <br />
+You can use any object with a colored point (e.g. defaulting using a blue expo marker) as a stylus. <br />
 
 ![demo](demo.gif)
 
@@ -47,9 +47,9 @@ Press <kbd>Space</kbd> to track colored tip and start writing <br />
 
 ### Shortcuts
 Press <kbd>z</kbd> to unwrite <br />
-Press <kbd>c</kbd> to unwrite <br />
-Press <kbd>b</kbd> to collect a background if you or the background changed <br />
-Press <kbd>s</kbd> to save the current screen of writing without video <br />
+Press <kbd>c</kbd> to clear <br />
+Press <kbd>b</kbd> to collect a new background (without colored point) <br />
+Press <kbd>s</kbd> to save current notes <br />
 
 Press <kbd>1</kbd> to change to Blue <br />
 Press <kbd>2</kbd> to change to Green <br />
