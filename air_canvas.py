@@ -220,7 +220,7 @@ while True:
         if center[1] <= 25: 
               
             # Clear Button 
-            if 40 <= center[0] <= 140:  
+            if (40 <= center[0] <= 140):  
                 bpoints = [deque(maxlen = 512)] 
                 gpoints = [deque(maxlen = 512)] 
                 rpoints = [deque(maxlen = 512)] 
@@ -271,8 +271,8 @@ while True:
             rpoints.append(deque(maxlen = 512)) 
             red_index += 1
 
-        if gpoints[-1] != deque(maxlen = 512):
-            gpoints.append(deque(maxlen = 512)) 
+        if ypoints[-1] != deque(maxlen = 512):
+            ypoints.append(deque(maxlen = 512)) 
             yellow_index += 1
    
     # Draw lines of all the colors on the 
@@ -291,6 +291,24 @@ while True:
         cap.release()
         cv2.destroyAllWindows()
         break
+    elif k == ord('1'): 
+        colorIndex = 0 # Blue 
+    elif k == ord('2'): 
+        colorIndex = 1 # Green 
+    elif k == ord('3'): 
+        colorIndex = 2 # Red 
+    elif k == ord('4'): 
+        colorIndex = 3 # Yellow 
+    elif k == ord('c'):  # press c to clear
+        bpoints = [deque(maxlen = 512)] 
+        gpoints = [deque(maxlen = 512)] 
+        rpoints = [deque(maxlen = 512)] 
+        ypoints = [deque(maxlen = 512)] 
+
+        blue_index = 0
+        green_index = 0
+        red_index = 0
+        yellow_index = 0
     elif k == ord('b') or iteration % 1000 == 2:  # press 'b' to capture the background
         bgModel = cv2.createBackgroundSubtractorMOG2(0, bgSubThreshold)
         isBgCaptured = True
