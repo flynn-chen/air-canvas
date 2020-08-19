@@ -26,18 +26,21 @@ conda activate air_canvas
 
 ### Running
 
-For macOS users,
-a terminal will pop up and ask for your password for sudo, 
-because keyboard tracking requires multi-threading.
+1. Unplug from external monitor
 
-double click
+2. double click
 ```
 run.command
 ```
-or for advanced users:  
+   or for advanced users:  
 ```
 sudo python air_canvas.py
 ```
+
+3. For macOS users,
+a terminal will pop up and ask for your password for sudo, 
+because keyboard tracking requires multi-threading, 
+enter you password and a two windows should pop up.
 
 ### Usage
 
